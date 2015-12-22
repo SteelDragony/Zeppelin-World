@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour {
     Rigidbody2D rb;
     public float speed = 10f;
     public float lifetime = 10f;
+    public float damage = 10f;
     float timeSpawned;
 
 	// Use this for initialization
@@ -27,4 +28,5 @@ public class Projectile : MonoBehaviour {
     void FixedUpdate()
     {
     }
+
 }
