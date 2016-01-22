@@ -4,33 +4,32 @@ using System.Collections;
 public class ProjectileWeapon : MonoBehaviour {
 
     public float cooldown = .2f;
+    public float inaccuracy = 10f;
 
     float prevShotTime = 0f;
+
+    public Unit unit;
 
     public GameObject projectile;
 	// Use this for initialization
 	void Start () {
-
+        unit = GetComponentInParent<Unit>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	    if(Input.GetButton("Fire1") && prevShotTime + cooldown < Time.time)
+    public void Fire()
+    {
+        if (prevShotTime + cooldown < Time.time)
         {
-            Instantiate(projectile, transform.position, transform.rotation);
+            GameObject shot = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
+            shot.GetComponent<Projectile>().side = unit.side;
+            shot.transform.Rotate(new Vector3(0f, 0f, Random.Range(-inaccuracy, inaccuracy)));
             prevShotTime = Time.time;
         }
-        Vector3 pos = Input.mousePosition;
-        pos = Camera.main.ScreenToWorldPoint(pos);
-        pos.z = 0;
-        Vector3 turretPos = transform.up;
-        turretPos.z = 0;
-        Vector3 targetDelta = transform.position - pos;
-        targetDelta.z = 0;
-        Vector3 cross = Vector3.Cross(turretPos, targetDelta);
-        cross.Normalize();
-        //cross = cross * 10;
-        transform.Rotate(-cross);
-        Debug.Log(cross);
+    }
+
+	// Update is called once per frame
+	void Update () {
+
+
 	}
 }

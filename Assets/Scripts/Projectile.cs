@@ -6,14 +6,18 @@ public class Projectile : MonoBehaviour {
     Rigidbody2D rb;
     public float speed = 10f;
     public float lifetime = 10f;
-    public float damage = 10f;
+    public float damage = 5f;
+    public float armourPiercing = 0f;
+
     float timeSpawned;
+    public int side = 0;
+
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         timeSpawned = Time.time;
-        transform.Rotate(new Vector3(0f, 0f, Random.Range(-10f, 10f)));
+
 	}
 	
 	// Update is called once per frame
@@ -29,4 +33,8 @@ public class Projectile : MonoBehaviour {
     {
     }
 
+    public void Hit()
+    {
+        Destroy(gameObject);
+    }
 }
